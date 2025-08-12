@@ -331,7 +331,7 @@ fn recv_dest_from(socket: &UdpSocket, buf: &mut [u8]) -> io::Result<(usize, Sock
 
         msg.msg_control = control_buf.as_mut_ptr() as *mut _;
         cfg_if! {
-            if #[cfg(any(target_env = "musl", all(target_env = "uclibc", target_arch = "arm")))] {
+            if #[cfg(any(target_env = "musl", target_env = "ohos", all(target_env = "uclibc", target_arch = "arm")))] {
                 msg.msg_controllen = control_buf.len() as libc::socklen_t;
             } else {
                 msg.msg_controllen = control_buf.len() as libc::size_t;
